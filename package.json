@@ -3,10 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [],
-  "author": "Nweke Favoure",
+  "author": "Nweke Favour",
   "license": "ISC",
   "description": "This is the backend API for an e-commerce platform. It handles user authentication, product listings, cart management, and order processing. Built with RESTful principles, it supports both user and admin functionalities.",
   "dependencies": {
