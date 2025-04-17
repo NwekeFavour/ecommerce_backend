@@ -1,4 +1,5 @@
 const Product = require("../models/products")
+
 // ===============================
 //description:    Get all products (with optional filters)
 // @route   GET /api/products
