@@ -9,7 +9,7 @@ const {
     deleteProduct   
 } = require("../controllers/productControllers")
 const { protect } = require('../middleware/authMiddleware');
-const {adminOnly} = require("../middleware/adminMIddleware");//my vscode was acting crazy on here
+const {adminOnly} = require("../middleware/adminMiddleware");//my vscode was acting crazy on here
 
 // Public routes (available for all users)
 router.get('/', getAllProducts); // List all products
