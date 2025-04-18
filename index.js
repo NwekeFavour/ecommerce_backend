@@ -15,7 +15,7 @@ app.use('/api/users', userRoutes); // use user routes
 app.use('/api/products', productRoutes); // use product routes
 app.use(cors());
 
-
+    
 connectDatabase();
 app.get("/", (req,res) => {
 res.send("The server is running")
