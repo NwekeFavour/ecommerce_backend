@@ -8,7 +8,7 @@ This is the backend API for an e-commerce platform. It handles user authenticati
 ## 🔗 Base URL
 
 ```
-https://ecommerce-backend-jmu1.onrender.com
+https://ecommerce-backend-12e3.onrender.com/
 ```
 
 ---
