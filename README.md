@@ -108,7 +108,7 @@ Authorization: Bearer <your_token>
 git clone https://github.com/NwekeFavour/ecommerce_backend.git
 cd ecommerce_backend
 npm install
-npm start
+node index || nodemon
 ```
 
 Configure environment variables:
