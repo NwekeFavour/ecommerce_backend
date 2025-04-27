@@ -22,7 +22,7 @@ router.post('/logout', protect, logoutUser);
 
 // Password Recovery
 router.post('/forgot-password', forgotPassword);
-router.post('/reset-password', resetPassword);
+router.post('/reset-password/:resetToken', resetPassword); // (this is for resetting after getting token)
 
 // Profile
 router.get('/profile', protect, getUserProfile);

@@ -1,6 +1,8 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require("crypto")
+const sendEmail = require('../utils/sendEmail'); // assuming you'll have a util to send emails
 
 // =========================
 // Helper: Generate JWT
@@ -108,9 +110,57 @@ exports.updateUserProfile = async (req, res) => {
 // description: Forgot password
 // @route   POST /api/users/forgot-password
 exports.forgotPassword = async (req, res) => {
-  // In real app: generate reset token, send email
-  res.json({ message: 'Reset link sent (mock)' });
+  try {
+    const { email } = req.body;
+
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found with this email' });
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // Hash token and set it on the user (store hashed token for security)
+    user.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    user.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+
+    await user.save({ validateBeforeSave: false });
+
+    // Create reset URL
+    const resetUrl = `${req.protocol}://${req.get('host')}/api/users/reset-password/${resetToken}`;
+
+    const message = `
+      You have requested a password reset. 
+      Please make a PUT request to: \n\n ${resetUrl} 
+      If you did not request this, please ignore this email.
+    `;
+
+    try {
+      // Send the email
+      await sendEmail({
+        email: user.email,
+        subject: 'Password Reset Request',
+        message
+      });
+
+      res.status(200).json({ message: 'Reset link sent to email' });
+    } catch (err) {
+      // If email fails, clear reset fields
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpire = undefined;
+      await user.save({ validateBeforeSave: false });
+
+      return res.status(500).json({ message: 'Email could not be sent' });
+    }
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server Error' });
+  }
 };
+
 
 // =========================
 // description: Reset password
