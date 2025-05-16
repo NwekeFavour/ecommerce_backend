@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const crypto = require("crypto")
 const sendEmail = require('../utils/sendEmail'); // assuming you'll have a util to send emails
-
+const logger = require("../utils/logger.js")
 // =========================
 // Helper: Generate JWT
 const generateToken = (userId) => {
@@ -156,7 +156,7 @@ exports.forgotPassword = async (req, res) => {
     }
 
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ message: 'Server Error' });
   }
 };

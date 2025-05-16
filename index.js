@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require("cors")
 const dotenv = require("dotenv")
+const logger = require("./utils/logger.js")
 const connectDatabase = require("./config/db")
 const port =5000 || process.env.PORT
 app.use(express.json());
@@ -23,6 +24,6 @@ res.send("The server is running")
 
 
 app.listen(port, ()=>{
-console.log(`Example app listening on port: http://localhost:${port}`)
+logger.info(`Example app listening on port: http://localhost:${port}`)
 })
 
